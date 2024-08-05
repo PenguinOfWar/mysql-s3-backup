@@ -55,7 +55,7 @@ const dumpToFile = async (path: string): Promise<void> => {
       // test connection
 
       const testCommand = spawn(
-        `mysql -e '\q' ${host} ${port} ${user} ${password}`
+        `mysql -e '\\q' ${host} ${port} ${user} ${password}`
       );
 
       testCommand.stdout.on("data", function (data) {
