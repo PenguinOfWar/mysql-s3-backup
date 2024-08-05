@@ -1,4 +1,4 @@
-import { exec, spawn } from "child_process";
+import { exec } from "child_process";
 import { PutObjectCommand, S3Client, S3ClientConfig } from "@aws-sdk/client-s3";
 import { createReadStream, unlink } from "fs";
 import { env } from "./env";
@@ -51,29 +51,9 @@ const dumpToFile = async (path: string): Promise<void> => {
       "innodb",
     ].join("|");
 
-    if (isDebug()) {
-      // test connection
-
-      const testCommand = spawn(
-        `mysql -e '\\q' ${host} ${port} ${user} ${password}`
-      );
-
-      testCommand.stdout.on("data", function (data) {
-        console.log("stdout: " + data.toString());
-      });
-
-      testCommand.stderr.on("data", function (data) {
-        console.log("stderr: " + data.toString());
-      });
-
-      testCommand.on("exit", function (code) {
-        console.log("child process exited with code " + code?.toString());
-      });
-    }
-
     const command = env.BACKUP_DATABASE_NAME
-      ? `mysqldump ${host} ${port} ${user} ${password} ${env.BACKUP_DATABASE_NAME} | gzip -c > ${path}`
-      : `mysql ${host} ${port} ${user} ${password} -e "show databases;" | grep -Ev "Database|${databasesToExclude}" | xargs mysqldump ${host} ${port} ${user} ${password} --databases | gzip -c > ${path}`;
+      ? `mysqldump ${host} ${port} ${user} ${password} ${env.BACKUP_DATABASE_NAME} | gzip > ${path}`
+      : `mysql ${host} ${port} ${user} ${password} -e "show databases;" | grep -Ev "Database|${databasesToExclude}" | xargs mysqldump ${host} ${port} ${user} ${password} --databases | gzip > ${path}`;
 
     if (isDebug()) {
       console.log(`Debug: SQL command: ${command}`);
