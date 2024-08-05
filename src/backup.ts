@@ -67,7 +67,7 @@ const dumpToFile = async (path: string): Promise<void> => {
       });
 
       testCommand.on("exit", function (code) {
-        console.log("child process exited with code " + code.toString());
+        console.log("child process exited with code " + code?.toString());
       });
     }
 
