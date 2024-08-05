@@ -39,10 +39,10 @@ const dumpToFile = async (path: string): Promise<void> => {
   console.log(`Creating dump at ${path}...`);
 
   await new Promise((resolve, reject) => {
-    const host = `-h '${env.BACKUP_DATABASE_HOST}'`;
-    const port = `-P '${env.BACKUP_DATABASE_PORT}'`;
-    const user = `-u '${env.BACKUP_DATABASE_USER}'`;
-    const password = `-p '${env.BACKUP_DATABASE_PASSWORD}'`;
+    const host = `--host='${env.BACKUP_DATABASE_HOST}'`;
+    const port = `--port='${env.BACKUP_DATABASE_PORT}'`;
+    const user = `--user='${env.BACKUP_DATABASE_USER}'`;
+    const password = `--password='${env.BACKUP_DATABASE_PASSWORD}'`;
     const databasesToExclude = [
       "mysql",
       "sys",
