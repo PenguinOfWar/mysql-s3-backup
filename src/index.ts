@@ -2,7 +2,7 @@ import { CronJob } from "cron";
 import { backup } from "./backup";
 import { env } from "./env";
 
-if (env.RUN_ON_STARTUP || env.SINGLE_SHOT_MODE) {
+if (env.RUN_ON_STARTUP) {
   console.log("Running on start backup...");
 
   backup();
